@@ -1,0 +1,36 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality:
+    name: Code Quality
+    runs-on: linux
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11.8'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-dev.txt
+
+      - name: Lint & Format (Ruff)
+        run: | 
+          ruff check src/ frontend/ scripts/ --exclude "*.md"
+          ruff format --check src/ frontend/ scripts/ --exclude "*.md"
+
+      - name: Type check (Mypy)
+        run: mypy .
+
+      - name: Build Docker images 
+        run: docker compose build
+
+     

@@ -1,0 +1,11 @@
+ruff 
+pytest
+mypy  
+
+# --- БИБЛИОТЕКИ ДЛЯ ПРОВЕРКИ ТИПОВ (Stub packages) ---
+numpy
+pandas
+numpy.typing    
+pandas-stubs    
+types-requests
+types-python-dateutil
